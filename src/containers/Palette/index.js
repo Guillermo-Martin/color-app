@@ -7,7 +7,9 @@ class Palette extends Component {
 
     console.log(this.props.colors)
     // for every palette in seedColors, render a color box for each of the palette's colors
-    const allColors = this.props.colors.map(color => <ColorBox color={color.color} name={color.name} /> );
+    const allColors = this.props.colors.map(color => 
+      <ColorBox color={color.color} name={color.name} /> 
+    );
 
     return (
       <div className="Palette">
