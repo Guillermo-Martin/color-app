@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import ColorBox from '../ColorBox';
-import 'rc-slider/assets/index.css';
+import Navbar from './../Navbar';
 import './Palette.css';
-import Slider from 'rc-slider';
-
 
 class Palette extends Component {
 
@@ -31,21 +29,8 @@ class Palette extends Component {
     return (
       <div className="Palette">
         {/* Navbar will go here */}
-
-        {/* Slider */}
-        {/* 1.  connect the slider with the numbers for colors */}
-        {/* -create state to keep track of the number */}
-        {/* -change the state when the slider value changes; per docs, it's "onAfterChange"*/}
-        <div className="Palette-slider">
-          <Slider 
-            defaultValue={level} 
-            min={100} 
-            max={900} 
-            step={100}
-            onAfterChange={this.changeLevel}
-          />
-        </div>
-        
+        {/* Pass down the level and the changeLevel function */}
+        <Navbar level={level} changeLevel={this.changeLevel} />
 
         {/* Palette's color boxes */}
         <div className="Palette-colors">{allColors}</div>
