@@ -5,3 +5,32 @@
 .Palette-colors {
   height: 90%;
 }
+
+.Palette-slider {
+  width: 340px;
+  margin: 0 10px;
+  display: inline-block;
+}
+
+/* classes used in rc-slider */
+.rc-slider-track {
+  background-color: transparent;
+}
+
+.rc-slider-handle, 
+.rc-slider-handle:active, 
+.rc-slider-handle:hover, 
+.rc-slider-handle:focus {
+  background-color: green;
+  outline: none;
+  border-color: green;
+  box-shadow: none;
+  width: 13px;
+  height: 13px;
+  margin-left: -7px;
+  margin-top: -3px;
+}
+
+.rc-slider-rail {
+  height: 8px;
+}
