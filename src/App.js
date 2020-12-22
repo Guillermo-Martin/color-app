@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PaletteList from './../src/containers/PaletteList';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Switch } from "react-router-dom";
 import Palette from './containers/Palette';
@@ -20,7 +21,8 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" render={() => <h1>PALETTE LIST GOES HERE</h1>} />
+          {/* pass all of the palettes to PaletteList as props; for each one create a mini palette */}
+          <Route exact path="/" render={() => <PaletteList palettes={seedColors} />} />
   
           {/* get the id from the path (using 'match.params.id' from react router), and use it to find the right palette with that id inside of our seed colors*/}
           <Route 
