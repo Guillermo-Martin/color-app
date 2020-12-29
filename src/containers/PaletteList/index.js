@@ -6,13 +6,15 @@ class PaletteList extends Component {
   render() {
 
     const { palettes } = this.props;
+    console.log(...palettes);
 
     return (
+      
       <div>
         <MiniPalette />
         <h1>React Colors</h1>
         {/* for each palette in seedColors, create a link */}
-        {palettes.map(palette => <p><Link to={`/palette/${palette.id}`}>{palette.paletteName}</Link></p>)}
+        {palettes.map(palette => <MiniPalette {...palette} />)}
       </div>
     );
   }
