@@ -1,4 +1,5 @@
 import React, { Component }from 'react';
+import { Link } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import './ColorBox.css';
 
@@ -43,7 +44,12 @@ class ColorBox extends Component {
             </div>
             <button className="ColorBox-copy-button">Copy</button>
           </div>
-          <span className="ColorBox-more">MORE</span>
+          {/* "stopPropagation()"" prevents further events from being called further up the line */}
+          {/* this will keep the overlay animation from the parent from firing */}
+          <Link to="/" onClick={event => event.stopPropagation()}>
+            <span className="ColorBox-more">MORE</span>
+          </Link>
+          
         </div>
       </CopyToClipboard>
     );
