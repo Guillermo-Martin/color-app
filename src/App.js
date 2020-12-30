@@ -22,7 +22,7 @@ class App extends Component {
       <Router>
         <Switch>
           {/* pass all of the palettes to PaletteList as props; for each one create a mini palette */}
-          <Route exact path="/" render={() => <PaletteList palettes={seedColors} />} />
+          <Route exact path="/" render={(routeProps) => <PaletteList {...routeProps} palettes={seedColors} />} />
   
           {/* get the id from the path (using 'match.params.id' from react router), and use it to find the right palette with that id inside of our seed colors*/}
           <Route 
