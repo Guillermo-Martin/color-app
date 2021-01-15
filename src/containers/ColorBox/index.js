@@ -18,7 +18,7 @@ class ColorBox extends Component {
 
   render() {
     // destructure color and name from props
-    const { color, name } = this.props;
+    const { color, name, moreUrl } = this.props;
 
     return (
       <CopyToClipboard text={ color } onCopy={this.changeCopyState}>
@@ -46,7 +46,10 @@ class ColorBox extends Component {
           </div>
           {/* "stopPropagation()"" prevents further events from being called further up the line */}
           {/* this will keep the overlay animation from the parent from firing */}
-          <Link to="/" onClick={event => event.stopPropagation()}>
+          <Link 
+            to={moreUrl} 
+            onClick={event => event.stopPropagation()}
+          >
             <span className="ColorBox-more">MORE</span>
           </Link>
           
