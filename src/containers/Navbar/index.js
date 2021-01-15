@@ -27,7 +27,7 @@ class Navbar extends Component {
 
   render() {
     // get level and changeLevel from props
-    const { level, changeLevel } = this.props;
+    const { level, changeLevel, showingAllColors } = this.props;
 
     const { format } = this.state;
 
@@ -42,18 +42,23 @@ class Navbar extends Component {
         {/* 1.  connect the slider with the numbers for colors */}
         {/* -create state to keep track of the number */}
         {/* -change the state when the slider value changes; per docs, it's "onAfterChange"*/}
-        <div className="Navbar-slider-container">
-          <span>Level: {level}</span>
-          <div className="Navbar-slider">
-            <Slider 
-              defaultValue={level} 
-              min={100} 
-              max={900} 
-              step={100}
-              onAfterChange={changeLevel}
-            />
+        {/* if 'this.props.showingAllColors' is true, then show the slider; this syntax is like the ternary, but basically saying
+        "if true, then display this thing" */}
+        {showingAllColors && (
+          <div className="Navbar-slider-container">
+            <span>Level: {level}</span>
+            <div className="Navbar-slider">
+              <Slider 
+                defaultValue={level} 
+                min={100} 
+                max={900} 
+                step={100}
+                onAfterChange={changeLevel}
+              />
+            </div>
           </div>
-        </div>
+        )}
+        
 
         {/* Material UI Select */}
         <div className="Navbar-select-container">

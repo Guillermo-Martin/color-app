@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ColorBox from './../ColorBox';
+import Navbar from './../Navbar';
+import PaletteFooter from './../../components/PaletteFooter';
 
 class SingleColorPalette extends Component {
   // our shades never change; it's always the same 9 shades of a given color; so we can just add it to the instance of the class itself
@@ -10,6 +12,10 @@ class SingleColorPalette extends Component {
     // by doing this, we're only gathering the shades one time and then us it over and over in render
     this._shades = this.gatherShades(this.props.palette, this.props.colorId);
     // console.log(this._shades);
+  }
+
+  state = {
+    format: "hex",
   }
 
   // take the palette and the color, find all of the colors that match the colorId inside of the palette
@@ -27,17 +33,28 @@ class SingleColorPalette extends Component {
     return shades.slice(1);
   }
 
+  changeFormat = value => {
+    this.setState({ format: value });
+  }
+
   render() {
+    const { format } = this.state;
+    const { paletteName, emoji } = this.props.palette;
     // for every shade in 'this._shades' make a color box;
     const colorBoxes = this._shades.map(color => (
-      <ColorBox key={color.id} name={color.name} color={color.hex} showLink={false} />
+      <ColorBox 
+        key={color.id} 
+        name={color.name} 
+        color={color[format]} 
+        showLink={false} />
     ));
 
 
     return (
       <div className="Palette">
-        <h1>Single Color Palette</h1>
+        <Navbar handleChange={this.changeFormat} showingAllColors={false}/>
         <div className="Palette-colors">{colorBoxes}</div>
+        <PaletteFooter paletteName={paletteName} emoji={emoji} />
       </div>
     );
   }
