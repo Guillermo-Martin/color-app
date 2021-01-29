@@ -57,6 +57,73 @@ const styles = {
     border: "none",
     textDecoration: "none",
     opacity: 0,
+  },
+  boxContent: {
+    position: "absolute",
+    padding: "10px",
+    width: "100%",
+    left: "0px",
+    bottom: "0px",
+    color: "black",
+    letterSpacing: "1px",
+    textTransform: "uppercase",
+    fontSize: "12px",
+  },
+  copyOverlay: {
+    opacity: "0",
+    zIndex: "0",
+    width: "100%",
+    height: "100%",
+    /* we want the "transform" property (listed below) to transition */
+    transition: "transform 0.6s ease-in-out",
+    /* get box to start off very small */
+    transform: "scale(0.1)",
+  },
+  showOverlay: {
+    opacity: "1",
+    /* the scale is based off of the width and height in the overlay */
+    /* when activated, the width and height of the overlay will be 50 times its original size */
+    transform: "scale(50)",
+    zIndex: "10",
+    position: "absolute",
+  },
+  copyMessage: {
+    position: "fixed",
+    left: "0",
+    right: "0",
+    top: "0",
+    bottom: "0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    /* flex-direction: column will put the elements in a column */
+    flexDirection: "column",
+    fontSize: "4rem",
+    transform: "scale(0.1)",
+    opacity: "0",
+    color: "white",
+    "& h1": {
+      fontWeight: "400",
+      textShadow: "1px 2px black",
+      background: "rgba(255, 255, 255, 0.2)",
+      width: "100%",
+      textAlign: "center",
+      marginBottom: "0",
+      padding: "1rem",
+      textTransform: "uppercase",
+    },
+    "& p": {
+      fontSize: "2rem",
+      fontWeight: "100",
+    },
+  },
+  showMessage: {
+    opacity: "1",
+    transform: "scale(1)",
+    zIndex: "25",
+    transition: "all 0.4s ease-in-out",
+    /* delay the showing of the message */
+    transitionDelay: "0.3s",
   }
 }
 
@@ -86,18 +153,18 @@ class ColorBox extends Component {
           {/* for className: if 'this.state.copied' is true, add 'show' to the className */}
           <div 
             style={{ background: color }} 
-            className={`ColorBox-copy-overlay ${this.state.copied && "show"}`}>
+            className={`${classes.copyOverlay} ${this.state.copied && classes.showOverlay}`}>
           </div>
 
           {/* Message in the overlay */}
           {/* When you click to copy, display the "copied" message */}
-          <div className={`ColorBox-copy-message ${this.state.copied && "show"}`}>
+          <div className={`${classes.copyMessage} ${this.state.copied && classes.showMessage}`}>
             <h1>Copied!</h1>
             <p className={classes.copyText}>{color}</p>
           </div>
 
-          <div className="ColorBox-copy-container">
-            <div className="ColorBox-box-content">
+          <div>
+            <div className={classes.boxContent}>
               <span className={classes.colorName}>{name}</span>
             </div>
             <button className={classes.copyButton}>Copy</button>
