@@ -2,7 +2,19 @@ import React, { Component } from 'react';
 import ColorBox from '../ColorBox';
 import Navbar from './../Navbar';
 import PaletteFooter from './../../components/PaletteFooter';
+import { withStyles } from '@material-ui/styles';
 import './Palette.css';
+
+const styles = {
+  Palette: {
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+  },
+  colors: {
+    height: "90%",
+  },
+}
 
 class Palette extends Component {
 
@@ -29,6 +41,7 @@ class Palette extends Component {
     // -we want to be able to change the number in the square brackets so we get different shades of colors
     // -we're going to use an npm package called "react-component slider" (https://github.com/react-component/slider)
     const { colors, paletteName, emoji, id } = this.props.palette;
+    const { classes } = this.props;
     const { level, format } = this.state;
     const allColors = colors[level].map(color => 
       <ColorBox 
@@ -41,13 +54,13 @@ class Palette extends Component {
     );
 
     return (
-      <div className="Palette">
+      <div className={classes.Palette}>
         {/* Navbar will go here */}
         {/* Pass down the level and the changeLevel function */}
         <Navbar level={level} changeLevel={this.changeLevel} handleChange={this.changeFormat} showingAllColors={true} />
 
         {/* Palette's color boxes */}
-        <div className="Palette-colors">{allColors}</div>
+        <div className={classes.colors}>{allColors}</div>
 
         {/* Footer will go here */}
         <PaletteFooter paletteName={paletteName} emoji={emoji} />
@@ -56,4 +69,4 @@ class Palette extends Component {
   }
 }
 
-export default Palette;
+export default withStyles(styles)(Palette);

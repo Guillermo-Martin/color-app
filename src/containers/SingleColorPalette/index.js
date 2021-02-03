@@ -3,6 +3,47 @@ import ColorBox from './../ColorBox';
 import Navbar from './../Navbar';
 import { Link } from 'react-router-dom';
 import PaletteFooter from './../../components/PaletteFooter';
+import { withStyles } from '@material-ui/styles';
+
+const styles = {
+  Palette: {
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+  },
+  colors: {
+    height: "90%",
+  },
+  goBack: {
+    width: "20%",
+    height: "50%",
+    margin: "0 auto",
+    display: "inline-block",
+    position: "relative",
+    cursor: "pointer",
+    marginBottom: "-3.5px",
+    opacity: 1,
+    backgroundColor: "black",
+    "& a": {
+      color: "white",
+      width: "100px",
+      height: "30px",
+      position: "absolute",
+      display: "inline-block",
+      top: "50%",
+      left: "50%",
+      marginLeft: "-50px",
+      marginTop: "-15px",
+      textAlign: "center",
+      outline: "none",
+      backgroundColor: "rgba(255, 255, 255, 0.3)",
+      fontSize: "1rem",
+      lineHeight: "30px",
+      border: "none",
+      textDecoration: "none",
+    }
+  },
+}
 
 class SingleColorPalette extends Component {
   // our shades never change; it's always the same 9 shades of a given color; so we can just add it to the instance of the class itself
@@ -41,6 +82,7 @@ class SingleColorPalette extends Component {
   render() {
     const { format } = this.state;
     const { paletteName, emoji, id } = this.props.palette;
+    const { classes } = this.props;
 
     // for every shade in 'this._shades' make a color box;
     const colorBoxes = this._shades.map(color => (
@@ -53,13 +95,13 @@ class SingleColorPalette extends Component {
 
 
     return (
-      <div className="SingleColorPalette Palette">
+      <div className={classes.Palette}>
         <Navbar handleChange={this.changeFormat} showingAllColors={false}/>
-        <div className="Palette-colors">
+        <div className={classes.colors}>
           {colorBoxes}
           {/* style for the box and the "back-button" is in "ColorBox.css" */}
-          <div className="go-back ColorBox">
-            <Link to={`/palette/${id}`} className="SingleColorPalette-back-button">GO BACK</Link>
+          <div className={classes.goBack}>
+            <Link to={`/palette/${id}`}>GO BACK</Link>
           </div>
         </div>
         <PaletteFooter paletteName={paletteName} emoji={emoji} />
@@ -68,6 +110,6 @@ class SingleColorPalette extends Component {
   }
 }
 
-export default SingleColorPalette;
+export default withStyles(styles)(SingleColorPalette);
 
 // we only want to get the shades for each individual color
