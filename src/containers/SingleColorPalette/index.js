@@ -3,47 +3,9 @@ import ColorBox from './../ColorBox';
 import Navbar from './../Navbar';
 import { Link } from 'react-router-dom';
 import PaletteFooter from './../../components/PaletteFooter';
+import styles from './../../assets/styles/PaletteStyles.js';
 import { withStyles } from '@material-ui/styles';
 
-const styles = {
-  Palette: {
-    height: "100vh",
-    display: "flex",
-    flexDirection: "column",
-  },
-  colors: {
-    height: "90%",
-  },
-  goBack: {
-    width: "20%",
-    height: "50%",
-    margin: "0 auto",
-    display: "inline-block",
-    position: "relative",
-    cursor: "pointer",
-    marginBottom: "-3.5px",
-    opacity: 1,
-    backgroundColor: "black",
-    "& a": {
-      color: "white",
-      width: "100px",
-      height: "30px",
-      position: "absolute",
-      display: "inline-block",
-      top: "50%",
-      left: "50%",
-      marginLeft: "-50px",
-      marginTop: "-15px",
-      textAlign: "center",
-      outline: "none",
-      backgroundColor: "rgba(255, 255, 255, 0.3)",
-      fontSize: "1rem",
-      lineHeight: "30px",
-      border: "none",
-      textDecoration: "none",
-    }
-  },
-}
 
 class SingleColorPalette extends Component {
   // our shades never change; it's always the same 9 shades of a given color; so we can just add it to the instance of the class itself
