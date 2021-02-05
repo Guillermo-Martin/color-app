@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Switch } from "react-router-dom";
 import Palette from './containers/Palette';
 import seedColors from './seedColors';
+import NewPaletteForm from './containers/NewPaletteForm';
 import SingleColorPalette from './containers/SingleColorPalette';
 import { generatePalette } from './colorHelpers';
 
@@ -22,6 +23,7 @@ class App extends Component {
     return (
       <Router>
         <Switch>
+          <Route exact path="/palette/new" render={() => <NewPaletteForm />} />
           {/* pass all of the palettes to PaletteList as props; for each one create a mini palette */}
           <Route exact path="/" render={(routeProps) => <PaletteList {...routeProps} palettes={seedColors} />} />
   
