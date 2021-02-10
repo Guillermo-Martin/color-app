@@ -11,6 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Button from "@material-ui/core/Button";
+import DraggableColorBox from './../../components/DraggableColorBox';
 import { ChromePicker } from 'react-color';
 
 // we're writing CSS in javascript so we can use dynamic values if we wanted to; this can help us with making things responsive
@@ -58,6 +59,8 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
+    // we're subtracting the height of the app bar from 100vh
+    height: "calc(100vh - 64px)",
     padding: theme.spacing.unit * 3,
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
@@ -168,9 +171,9 @@ class NewPaletteForm extends Component {
           })}
         >
           <div className={classes.drawerHeader} />
-          <ul>
-            {this.state.colors.map(color => <li style={{backgroundColor: color}}>{color}</li>)}
-          </ul>
+          
+            {this.state.colors.map(color => <DraggableColorBox color={color} />)}
+          
         </main>
       </div>
     );
