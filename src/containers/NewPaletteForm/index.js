@@ -12,7 +12,9 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Button from "@material-ui/core/Button";
 import DraggableColorBox from './../../components/DraggableColorBox';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { ChromePicker } from 'react-color';
+import { blue } from '@material-ui/core/colors';
 
 // we're writing CSS in javascript so we can use dynamic values if we wanted to; this can help us with making things responsive
 const drawerWidth = 400;
@@ -81,8 +83,27 @@ class NewPaletteForm extends Component {
   state = {
     open: false,
     currentColor: "teal",
-    colors: ["purple", "#e15764"],
+    newName: "",
+    colors: [{color: "blue", name: "blue"}],
   };
+
+  componentDidMount() {
+    // "value" will be whatever is in the input for the color name; we want to check the value to all of the values that are currently
+    // in the "colors" state
+    // validation to check for a unique color name
+    ValidatorForm.addValidationRule('isColorNameUnique', value => 
+      this.state.colors.every(
+        ({ name }) => name.toLowerCase() !== value.toLowerCase()
+      )
+    );
+
+    // validation to check that the color itself is unique
+    ValidatorForm.addValidationRule('isColorUnique', value => 
+      this.state.colors.every(
+        ({ color }) => color !== this.state.currentColor
+      )
+    );
+  }
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -97,7 +118,15 @@ class NewPaletteForm extends Component {
   }
 
   addNewColor = () => {
-    this.setState({ colors: [...this.state.colors, this.state.currentColor] });
+    const newColor = {
+      color: this.state.currentColor,
+      name: this.state.newName
+    }
+    this.setState({ colors: [...this.state.colors, newColor ], newName: "" });
+  }
+
+  handleChange = event => {
+    this.setState({ newName: event.target.value });
   }
 
   render() {
@@ -154,14 +183,25 @@ class NewPaletteForm extends Component {
           
           {/* 'onChangeComplete' gets called whenever we call a new color */}
           <ChromePicker color={this.state.currentColor} onChangeComplete={this.updateCurrentColor} />
-          <Button 
-            variant="contained" 
-            color="primary" 
-            style={{backgroundColor: this.state.currentColor}}
-            onClick={this.addNewColor}
-          >
-            Add Color
-          </Button>
+          <ValidatorForm onSubmit={this.addNewColor}>
+            <TextValidator 
+              value={this.state.newName} 
+              onChange={this.handleChange}
+              // to make our own validator using react-material-ui-validator, we add our own validation rule to ValidatorForm in componentDidMount()
+              // the order of the validators and error messages matter
+              validators={['required', 'isColorNameUnique', 'isColorUnique']}
+              errorMessages={['Enter a color name', 'Color name must be unique', 'Color already used!']} 
+            />
+            <Button 
+              variant="contained"
+              type="submit"
+              color="primary" 
+              style={{backgroundColor: this.state.currentColor}}
+            >
+              Add Color
+            </Button>
+          </ValidatorForm>
+          
         </Drawer>
         
         {/* This is where all of the content will go */}
@@ -172,7 +212,7 @@ class NewPaletteForm extends Component {
         >
           <div className={classes.drawerHeader} />
           
-            {this.state.colors.map(color => <DraggableColorBox color={color} />)}
+            {this.state.colors.map(color => <DraggableColorBox color={color.color} name={color.name} />)}
           
         </main>
       </div>
