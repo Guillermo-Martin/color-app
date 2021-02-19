@@ -129,6 +129,23 @@ class NewPaletteForm extends Component {
     this.setState({ newName: event.target.value });
   }
 
+  handleSubmit = () => {
+    // this will be eventually coming from a form where the user will specify a name
+    let newName = "New Test Palette";
+
+    // get all the colors from the palette and pass it up to the parent (which in this case is "App")
+    const newPalette = {
+      paletteName: newName,
+      id: newName.toLowerCase().replace(/ /g, "-"), // <-- using a regular express to replace the spaces with a "-"
+      colors: this.state.colors
+    }
+
+    this.props.savePalette(newPalette);
+
+    // redirect back to the homepage
+    this.props.history.push("/");
+  }
+
   render() {
     const { classes } = this.props;
     const { open } = this.state;
@@ -139,6 +156,7 @@ class NewPaletteForm extends Component {
         {/* The "AppBar" is what we see at the top; the purple bar */}
         <AppBar
           position='fixed'
+          color="default"
           className={classNames(classes.appBar, {
             [classes.appBarShift]: open 
           })}
@@ -157,6 +175,7 @@ class NewPaletteForm extends Component {
             <Typography variant='h6' color='inherit' noWrap>
               Persistent drawer
             </Typography>
+            <Button variant="contained" color="primary" onClick={this.handleSubmit}>Save Palette</Button>
           </Toolbar>
         </AppBar>
         <Drawer

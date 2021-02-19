@@ -9,23 +9,30 @@ import SingleColorPalette from './containers/SingleColorPalette';
 import { generatePalette } from './colorHelpers';
 
 class App extends Component {
-  // console.log(generatePalette(seedColors[4]));
+  state = {
+    palettes: seedColors,
+  }
 
   // function to find the correct palette
   findPalette = id => {
-    return seedColors.find(palette => {
+    return this.state.palettes.find(palette => {
       // return the palette where the palette's id matches the id passed in
       return palette.id === id;
     });
+  }
+
+  savePalette = newPalette => {
+    // save the newPalette into state; spread out the existing seedColors then add the newPalette
+    this.setState({ palettes: [...this.state.palettes, newPalette] });
   }
 
   render(){
     return (
       <Router>
         <Switch>
-          <Route exact path="/palette/new" render={() => <NewPaletteForm />} />
+          <Route exact path="/palette/new" render={(routeProps) => <NewPaletteForm savePalette={this.savePalette} {...routeProps}/>} />
           {/* pass all of the palettes to PaletteList as props; for each one create a mini palette */}
-          <Route exact path="/" render={(routeProps) => <PaletteList {...routeProps} palettes={seedColors} />} />
+          <Route exact path="/" render={(routeProps) => <PaletteList {...routeProps} palettes={this.state.palettes} />} />
   
           {/* get the id from the path (using 'match.params.id' from react router), and use it to find the right palette with that id inside of our seed colors*/}
           <Route 
