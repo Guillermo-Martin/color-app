@@ -11,10 +11,11 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Button from "@material-ui/core/Button";
-import DraggableColorBox from './../../components/DraggableColorBox';
+import DraggableColorList from './../../components/DraggableColorList';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { ChromePicker } from 'react-color';
 import { blue } from '@material-ui/core/colors';
+import { arrayMove } from 'react-sortable-hoc';
 
 // we're writing CSS in javascript so we can use dynamic values if we wanted to; this can help us with making things responsive
 const drawerWidth = 400;
@@ -161,6 +162,12 @@ class NewPaletteForm extends Component {
     });
   }
 
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    this.setState(({ colors }) => ({
+      colors: arrayMove(colors, oldIndex, newIndex),
+    }));
+  }
+
   render() {
     const { classes } = this.props;
     const { open } = this.state;
@@ -257,14 +264,12 @@ class NewPaletteForm extends Component {
         >
           <div className={classes.drawerHeader} />
           
-            {this.state.colors.map(color => 
-              <DraggableColorBox 
-                key={color.name}
-                color={color.color} 
-                name={color.name} 
-                handleClick={() => this.removeColor(color.name)} 
-              />
-            )}
+          <DraggableColorList 
+            colors={this.state.colors} 
+            removeColor={this.removeColor} 
+            axis="xy" // <--- for specifying how the draggable boxes work
+            onSortEnd={this.onSortEnd} // <--- for specifying where to save new location of boxes
+          />
           
         </main>
       </div>
