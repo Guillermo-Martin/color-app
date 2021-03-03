@@ -9,8 +9,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Button from "@material-ui/core/Button";
 import DraggableColorList from './../../components/DraggableColorList';
 import PaletteFormNav from './../PaletteFormNav/';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import { ChromePicker } from 'react-color';
+import ColorPickerForm from './../ColorPickerForm';
 import { arrayMove } from 'react-sortable-hoc';
 
 // we're writing CSS in javascript so we can use dynamic values if we wanted to; this can help us with making things responsive
@@ -83,28 +82,10 @@ class NewPaletteForm extends Component {
 
   state = {
     open: false,
-    currentColor: "teal",
-    newColorName: "",
     colors: this.props.palettes[0].colors,
   };
 
-  componentDidMount() {
-    // "value" will be whatever is in the input for the color name; we want to check the value to all of the values that are currently
-    // in the "colors" state
-    // validation to check for a unique color name
-    ValidatorForm.addValidationRule('isColorNameUnique', value => 
-      this.state.colors.every(
-        ({ name }) => name.toLowerCase() !== value.toLowerCase()
-      )
-    );
-
-    // validation to check that the color itself is unique
-    ValidatorForm.addValidationRule('isColorUnique', value => 
-      this.state.colors.every(
-        ({ color }) => color !== this.state.currentColor
-      )
-    );
-  }
+  
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -114,15 +95,7 @@ class NewPaletteForm extends Component {
     this.setState({ open: false });
   };
 
-  updateCurrentColor = newColor => {
-    this.setState({ currentColor: newColor.hex });
-  }
-
-  addNewColor = () => {
-    const newColor = {
-      color: this.state.currentColor,
-      name: this.state.newColorName,
-    }
+  addNewColor = newColor => {
     this.setState({ colors: [...this.state.colors, newColor ], newColorName: "" });
   }
 
@@ -215,28 +188,7 @@ class NewPaletteForm extends Component {
             <Button variant="contained" color="primary" onClick={this.addRandomColor} disabled={paletteIsFull}>Random Color</Button>
           </div>
           
-          {/* 'onChangeComplete' gets called whenever we call a new color */}
-          <ChromePicker color={this.state.currentColor} onChangeComplete={this.updateCurrentColor} />
-          <ValidatorForm onSubmit={this.addNewColor}>
-            <TextValidator 
-              value={this.state.newColorName}
-              name="newColorName"
-              onChange={this.handleChange}
-              // to make our own validator using react-material-ui-validator, we add our own validation rule to ValidatorForm in componentDidMount()
-              // the order of the validators and error messages matter
-              validators={['required', 'isColorNameUnique', 'isColorUnique']}
-              errorMessages={['Enter a color name', 'Color name must be unique', 'Color already used!']} 
-            />
-            <Button
-              variant="contained"
-              type="submit"
-              color="primary"
-              disabled={paletteIsFull}
-              style={{ backgroundColor: paletteIsFull ? "grey" : this.state.currentColor} }
-            >
-              { paletteIsFull ? "Palette Full" : "Add Color" }
-            </Button>
-          </ValidatorForm>
+          <ColorPickerForm paletteIsFull={paletteIsFull} addNewColor={this.addNewColor} colors={colors}/>
           
         </Drawer>
         
