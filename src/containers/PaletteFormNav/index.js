@@ -93,9 +93,6 @@ class PaletteFormNav extends Component {
             <Typography variant='h6' color='inherit' noWrap>
               Create A Palette
             </Typography>
-
-            
-            
           </Toolbar>
 
           <div className={classes.navBtns}>
