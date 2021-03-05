@@ -83,7 +83,6 @@ class NewPaletteForm extends Component {
     colors: this.props.palettes[0].colors,
   };
 
-  
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -148,7 +147,6 @@ class NewPaletteForm extends Component {
   }
 
 
-
   render() {
     const { classes, maxColors, palettes } = this.props;
     const { open, colors } = this.state;
@@ -205,8 +203,7 @@ class NewPaletteForm extends Component {
             removeColor={this.removeColor} 
             axis="xy" // <--- for specifying how the draggable boxes work
             onSortEnd={this.onSortEnd} // <--- for specifying where to save new location of boxes
-          />
-          
+          /> 
         </main>
       </div>
     );
