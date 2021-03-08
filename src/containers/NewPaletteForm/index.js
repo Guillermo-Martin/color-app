@@ -119,13 +119,9 @@ class NewPaletteForm extends Component {
     this.setState({ colors: [...this.state.colors, randomColor] })
   }
 
-  handleSubmit = (newPaletteName) => {
-    // get all the colors from the palette and pass it up to the parent (which in this case is "App")
-    const newPalette = {
-      paletteName: newPaletteName,
-      id: newPaletteName.toLowerCase().replace(/ /g, "-"), // <-- using a regular express to replace the spaces with a "-"
-      colors: this.state.colors
-    }
+  handleSubmit = (newPalette) => {
+    newPalette.id = newPalette.paletteName.toLowerCase().replace(/ /g, "-"); // <-- using a regular express to replace the spaces with a "-"
+    newPalette.colors = this.state.colors;
 
     this.props.savePalette(newPalette);
 
