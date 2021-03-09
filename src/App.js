@@ -8,11 +8,17 @@ import NewPaletteForm from './containers/NewPaletteForm';
 import SingleColorPalette from './containers/SingleColorPalette';
 import { generatePalette } from './colorHelpers';
 
+
+// check local storage
+const savedPalettes = JSON.parse(window.localStorage.getItem("palettes"));
+
+
 class App extends Component {
   state = {
-    palettes: seedColors,
+    // if there are palettes in localStorage, use that; otherwise use "seedColors" data
+    palettes: savedPalettes || seedColors,
   }
-
+  
   // function to find the correct palette
   findPalette = id => {
     return this.state.palettes.find(palette => {
@@ -23,7 +29,13 @@ class App extends Component {
 
   savePalette = newPalette => {
     // save the newPalette into state; spread out the existing seedColors then add the newPalette
-    this.setState({ palettes: [...this.state.palettes, newPalette] });
+    // after setting the state, save the palettes to local storage
+    this.setState({ palettes: [...this.state.palettes, newPalette] }, this.syncLocalStorage);
+  }
+
+  // save palettes to local storage
+  syncLocalStorage = () => {
+    window.localStorage.setItem("palettes", JSON.stringify(this.state.palettes));
   }
 
   render(){
