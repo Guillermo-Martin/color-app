@@ -27,6 +27,17 @@ class App extends Component {
     });
   }
 
+  // function to delete palette
+  deletePalette = id => {
+    // find the palette with a particular id using filter; for each palette, where the palette.id isn't equal to the id being passed in we'll add it to a new array
+    // thus leaving out the palette that does match
+    this.setState(state => ({ palettes: state.palettes.filter(palette => palette.id !== id) }),
+
+    // then update localStorage with the new set of palettes; will be called when setState is done
+    this.syncLocalStorage
+    );
+  }
+
   savePalette = newPalette => {
     // save the newPalette into state; spread out the existing seedColors then add the newPalette
     // after setting the state, save the palettes to local storage
@@ -45,7 +56,9 @@ class App extends Component {
           <Route 
             exact path="/palette/new" render={(routeProps) => <NewPaletteForm savePalette={this.savePalette} palettes={this.state.palettes} {...routeProps}/>} />
           {/* pass all of the palettes to PaletteList as props; for each one create a mini palette */}
-          <Route exact path="/" render={(routeProps) => <PaletteList {...routeProps} palettes={this.state.palettes} />} />
+          <Route exact path="/" render={(routeProps) => 
+            <PaletteList {...routeProps} palettes={this.state.palettes} deletePalette={this.deletePalette} />}
+          />
   
           {/* get the id from the path (using 'match.params.id' from react router), and use it to find the right palette with that id inside of our seed colors*/}
           <Route 
