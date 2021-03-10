@@ -1,5 +1,6 @@
 // the drawer width is from "constants.js"
 import { DRAWER_WIDTH } from './../../constants';
+import sizes from './sizes';
 const drawerWidth = DRAWER_WIDTH;
 
 // "styles" is a function that accepts a "theme"; theme contains a bunch of useful things we don't have to create ourselves; it's part of material ui
@@ -36,10 +37,17 @@ const styles = theme => ({
     marginRight: "1rem",
     "& a": {
       textDecoration: "none"
+    },
+    [sizes.down("xs")]: {
+      marginRight: "0.5rem"
     }
   },
   button: {
     margin: "0 0.5rem",
+    [sizes.down("xs")]: {
+      margin: "0 0.2rem",
+      padding: "0.3rem"
+    }
   },
 });
 
