@@ -2,6 +2,7 @@ import React, { Component }from 'react';
 import { Link } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import styles from './../../assets/styles/ColorBoxStyles.js';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/styles';
 
 
@@ -21,6 +22,7 @@ class ColorBox extends Component {
   render() {
     // destructure color and name from props
     const { color, name, moreUrl, showingFullPalette, classes } = this.props;
+    const { copied } = this.state;
     
     return (
       <CopyToClipboard text={ color } onCopy={this.changeCopyState}>
@@ -29,13 +31,16 @@ class ColorBox extends Component {
           {/* When you click to copy, display the overlay and have it grow */}
           {/* for className: if 'this.state.copied' is true, add 'show' to the className */}
           <div 
-            style={{ background: color }} 
-            className={`${classes.copyOverlay} ${this.state.copied && classes.showOverlay}`}>
+            style={{ background: color }}
+            // we always want "classes.copyOverlay". then optionally, we want "classes.showOverlay when" "copied" is "true" 
+            className={classNames(classes.copyOverlay, {[classes.showOverlay]: copied})}
+          >
+            
           </div>
 
           {/* Message in the overlay */}
           {/* When you click to copy, display the "copied" message */}
-          <div className={`${classes.copyMessage} ${this.state.copied && classes.showMessage}`}>
+          <div className={classNames(classes.copyMessage, {[classes.showMessage]: copied})}>
             <h1>Copied!</h1>
             <p className={classes.copyText}>{color}</p>
           </div>
