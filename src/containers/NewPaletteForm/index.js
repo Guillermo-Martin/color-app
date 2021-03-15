@@ -140,6 +140,7 @@ class NewPaletteForm extends Component {
             removeColor={this.removeColor} 
             axis="xy" // <--- for specifying how the draggable boxes work
             onSortEnd={this.onSortEnd} // <--- for specifying where to save new location of boxes
+            distance={20}
           /> 
         </main>
       </div>
