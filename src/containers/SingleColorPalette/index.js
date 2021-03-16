@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { withStyles } from '@material-ui/styles';
+import { Link } from 'react-router-dom';
 import ColorBox from './../ColorBox';
 import Navbar from './../Navbar';
-import { Link } from 'react-router-dom';
 import PaletteFooter from './../../components/PaletteFooter';
 import styles from './../../assets/styles/PaletteStyles.js';
-import { withStyles } from '@material-ui/styles';
 
 
 class SingleColorPalette extends Component {
@@ -15,7 +15,6 @@ class SingleColorPalette extends Component {
     // get the shades from 'this.props.palette' for the color we're looking for (which is in 'this.props.colorId')
     // by doing this, we're only gathering the shades one time and then us it over and over in render
     this._shades = this.gatherShades(this.props.palette, this.props.colorId);
-    // console.log(this._shades);
   }
 
   state = {
@@ -37,6 +36,7 @@ class SingleColorPalette extends Component {
     return shades.slice(1);
   }
 
+  // function to change format
   changeFormat = value => {
     this.setState({ format: value });
   }
@@ -73,5 +73,3 @@ class SingleColorPalette extends Component {
 }
 
 export default withStyles(styles)(SingleColorPalette);
-
-// we only want to get the shades for each individual color

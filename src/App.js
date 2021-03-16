@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import PaletteList from './../src/containers/PaletteList';
-import Page from './components/Page';
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Switch } from "react-router-dom";
 import Palette from './containers/Palette';
-import seedColors from './seedColors';
 import NewPaletteForm from './containers/NewPaletteForm';
 import SingleColorPalette from './containers/SingleColorPalette';
+import Page from './components/Page';
+import seedColors from './seedColors';
 import { generatePalette } from './colorHelpers';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 
 // check local storage
 const savedPalettes = JSON.parse(window.localStorage.getItem("palettes"));
-
 
 class App extends Component {
   state = {
@@ -40,6 +39,7 @@ class App extends Component {
     );
   }
 
+  // function to save palette
   savePalette = newPalette => {
     // save the newPalette into state; spread out the existing seedColors then add the newPalette
     // after setting the state, save the palettes to local storage

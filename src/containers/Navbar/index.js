@@ -12,7 +12,6 @@ import 'rc-slider/assets/index.css';
 
 
 class Navbar extends Component {
-
   state = {
     format: "hex",
     open: false,
@@ -28,9 +27,8 @@ class Navbar extends Component {
   }
 
   render() {
-    // get level and changeLevel from props
+    // get level, changeLevel, showingAllColors, classes from props
     const { level, changeLevel, showingAllColors, classes } = this.props;
-
     const { format } = this.state;
 
     return (
@@ -61,7 +59,6 @@ class Navbar extends Component {
           </div>
         )}
         
-
         {/* Material UI Select */}
         <div className={classes.selectContainer}>
           <Select value={format} onChange={this.handleFormatChange}>
@@ -91,7 +88,6 @@ class Navbar extends Component {
           </IconButton>
         ]}
       />
-
       </header>
     );
   }

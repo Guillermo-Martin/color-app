@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { ChromePicker } from 'react-color';
+import { withStyles } from "@material-ui/core/styles";
 import styles from './../../assets/styles/ColorPickerFormStyles';
 
 
@@ -30,14 +30,17 @@ class ColorPickerForm extends Component {
     );
   }
 
+  // function to update current color
   updateCurrentColor = newColor => {
     this.setState({ currentColor: newColor.hex });
   }
 
+  // function for inputs
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  // function for handling submit
   handleSubmit = () => {
     const newColor = {
       color: this.state.currentColor,

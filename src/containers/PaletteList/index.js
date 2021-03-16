@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import MiniPalette from './../MiniPalette';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Avatar from '@material-ui/core/Avatar';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -10,12 +10,12 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { withStyles } from '@material-ui/styles';
-import styles from '../../assets/styles/PaletteListStyles.js';
 // we can import colors from material ui
 import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
+import MiniPalette from './../MiniPalette';
+import styles from '../../assets/styles/PaletteListStyles.js';
 
 
 class PaletteList extends Component {
@@ -24,18 +24,22 @@ class PaletteList extends Component {
     deletingId: ""
   }
 
+  // function to open dialog
   openDialog = id => {
     this.setState({ openDeleteDialog: true, deletingId: id });
   }
 
+  // function to close dialog
   closeDialog = () => {
     this.setState({ openDeleteDialog: false, deletingId: "" });
   }
 
+  // function to go to the specific palette
   goToPalette = id => {
     this.props.history.push(`/palette/${id}`);
   }
 
+  // function to delete palette
   handleDelete = () => {
     this.props.deletePalette(this.state.deletingId);
     this.closeDialog();
@@ -43,11 +47,10 @@ class PaletteList extends Component {
 
 
   render() {
-    const { palettes, classes, deletePalette } = this.props;
-    const { openDeleteDialog, deletingId } = this.state;
+    const { palettes, classes } = this.props;
+    const { openDeleteDialog } = this.state;
  
     return (
-      
       <div className={classes.root}>
         <div className={classes.container}>
           {/* Navbar */}
@@ -64,7 +67,6 @@ class PaletteList extends Component {
                   <MiniPalette
                     {...palette}
                     goToPalette={this.goToPalette}
-                    // handleDelete={deletePalette}
                     openDialog={this.openDialog}
                     key={palette.id}
                     id={palette.id}

@@ -1,8 +1,8 @@
 import React, { Component }from 'react';
 import { Link } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import styles from './../../assets/styles/ColorBoxStyles.js';
 import classNames from 'classnames';
+import styles from './../../assets/styles/ColorBoxStyles.js';
 import { withStyles } from '@material-ui/styles';
 
 
@@ -15,7 +15,7 @@ class ColorBox extends Component {
   changeCopyState = () => {
     this.setState({ copied: true }, () => {
       // after chaging "copied" to true, change "copied" back to "false" after 1.5 sec
-      setTimeout(() => this.setState({ copied: false }), 1500)
+      setTimeout(() => this.setState({ copied: false }), 1500);
     })
   }
 
@@ -34,8 +34,7 @@ class ColorBox extends Component {
             style={{ background: color }}
             // we always want "classes.copyOverlay". then optionally, we want "classes.showOverlay when" "copied" is "true" 
             className={classNames(classes.copyOverlay, {[classes.showOverlay]: copied})}
-          >
-            
+          > 
           </div>
 
           {/* Message in the overlay */}
@@ -61,8 +60,6 @@ class ColorBox extends Component {
               <span className={classes.seeMore}>MORE</span>
             </Link>
           )}
-          
-          
         </div>
       </CopyToClipboard>
     );

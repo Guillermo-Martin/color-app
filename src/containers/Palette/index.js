@@ -24,14 +24,13 @@ class Palette extends Component {
   }
 
   render() {
-
-    // console.log(this.props.colors);
-    // -for every palette in seedColors, render a color box for each of the palette's colors
     // -we want to be able to change the number in the square brackets so we get different shades of colors
     // -we're going to use an npm package called "react-component slider" (https://github.com/react-component/slider)
     const { colors, paletteName, emoji, id } = this.props.palette;
     const { classes } = this.props;
     const { level, format } = this.state;
+
+    // -for every palette in seedColors, render a color box for each of the palette's colors
     const allColors = colors[level].map(color => 
       <ColorBox 
         color={color[format]} 

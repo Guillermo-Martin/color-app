@@ -24,27 +24,32 @@ class NewPaletteForm extends Component {
     colors: this.props.palettes[0].colors,
   };
 
-
+  // function to open drawer
   handleDrawerOpen = () => {
     this.setState({ open: true });
   };
 
+  // function to close drawer
   handleDrawerClose = () => {
     this.setState({ open: false });
   };
 
+  // function to add new color
   addNewColor = newColor => {
     this.setState({ colors: [...this.state.colors, newColor ], newColorName: "" });
   }
 
+  // function for inputs
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  // function to clear colors
   clearColors = () => {
     this.setState({ colors: [] });
   }
 
+  // function to add random color
   addRandomColor = () => {
     // pick random color from existing palettes
     // combine colors from all palettes
@@ -60,6 +65,7 @@ class NewPaletteForm extends Component {
     this.setState({ colors: [...this.state.colors, randomColor] })
   }
 
+  // function for handling submit
   handleSubmit = (newPalette) => {
     newPalette.id = newPalette.paletteName.toLowerCase().replace(/ /g, "-"); // <-- using a regular express to replace the spaces with a "-"
     newPalette.colors = this.state.colors;
@@ -70,6 +76,7 @@ class NewPaletteForm extends Component {
     this.props.history.push("/");
   }
 
+  // function to remove color
   removeColor = colorName => {
     this.setState({
       // we're filtering out where color.name is colorName
@@ -77,6 +84,7 @@ class NewPaletteForm extends Component {
     });
   }
 
+  // function for dragging color
   onSortEnd = ({ oldIndex, newIndex }) => {
     this.setState(({ colors }) => ({
       colors: arrayMove(colors, oldIndex, newIndex),
