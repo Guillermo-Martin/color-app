@@ -1,6 +1,8 @@
 // the drawer width is from "constants.js"
 import { DRAWER_WIDTH } from './../../constants';
+import sizes from './../styles/sizes';
 const drawerWidth = DRAWER_WIDTH;
+
 
 // "styles" is a function that accepts a "theme"; theme contains a bunch of useful things we don't have to create ourselves; it's part of material ui
 const styles = theme => ({
@@ -17,7 +19,10 @@ const styles = theme => ({
   drawerPaper: {
     width: drawerWidth,
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    [sizes.down("xs")]: {
+      width: "100%"
+    }
   },
   drawerHeader: {
     display: "flex",
@@ -57,8 +62,12 @@ const styles = theme => ({
     width: "100%"
   },
   button: {
-    width: "50%"
-  }
+    width: "50%",
+    [sizes.down("xs")]: {
+      width: "100%",
+      marginTop: "1rem"
+    }
+  },
 });
 
 export default styles;
