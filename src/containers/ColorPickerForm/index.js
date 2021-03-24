@@ -55,7 +55,7 @@ class ColorPickerForm extends Component {
     const { currentColor, newColorName } = this.state;
 
     return (
-      <div>
+      <div style={{ width: "inherit" }}>
         {/* 'onChangeComplete' gets called whenever we call a new color */}
         <ChromePicker color={currentColor} onChangeComplete={this.updateCurrentColor} className={classes.picker}/>
         <ValidatorForm onSubmit={this.handleSubmit} ref="form" instantValidate={false}>
